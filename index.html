@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 메타데이타 -->
+    <!-- 웹사이트 설명 -->
+    <meta name="description" content="국내외 여행관련 정보를 제공하는 사이트">
+    <!-- 키워드 -->
+    <meta name="keywords" content="국내여행,해외여행,스케쥴">
+    <!-- 만든이 -->
+    <meta name="author" content="tourist company">
+    
+    <!-- 오픈그래픽 -->
+    <meta property="og:image" content="./images/mainslide_mob01.jpg">
+    <!-- 오픈그래픽 설명 -->
+    <meta property="og:description" content="국내외 여행관련 정보를 제공하는 사이트">
+    <!-- 오픈그래픽 타이틀 -->
+    <meta property="og:title" content="투어리스트">
+
+    <!-- 트위터카드 -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://pam7461.github.io/tourist">
+    <meta name="twitter:title" content="투어리스트">
+    <meta name="twitter:description" content="국내외 여행관련 정보를 제공하는 사이트">
+    <meta name="twitter:image" content="./images/mainslide_mob01.jpg">
+
+    <!-- 파비콘 -->
+    <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+    <!-- 스타일 -->
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/bxslider.css">
+
+
+    <!-- 스크립트 -->
+    <script src="./js/jquery.js"></script>
+    <script src="./js/bxslider.js"></script>
+
+    <title>투어리스트</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+        :root{
+            font-family:'Noto Sans KR', sans-serif;
+            font-weight:400;
+            font-size:16px;
+            color:#000;
+            line-height:1.2;
+            scroll-behavior:smooth;
+        }
+        /* skip-menu */
+        #skip-menu a{
+            position:fixed;
+            left:0;
+            right:0;
+            top:-100%;
+            z-index:1001;
+            padding:16px;
+            background:#fff;
+            text-align:center;
+            /* display:none; */
+        }
+        #skip-menu a:focus{
+            /* display:block; */
+            top:0;
+        }
+
+        /* #wrap */
+        #wrap{
+            overflow:hidden;
+        }
+        /* .container */
+        .container{
+            max-width:1090px;
+            margin:0 auto;
+            padding:0 20px;
+        }
+        #header{
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            z-index:1000;           
+            background:rgba(0,0,0,0.2);
+        }
+        #header.active{
+            background:#666;
+        }
+        #header .container{
+            display:grid;
+            grid-template-columns:repeat(6,1fr);
+            align-items:center;
+            height:90px;
+        }
+        h1{
+            grid-column:2/6;
+            grid-row:1/2;
+            text-align:center;
+        }
+        h1 a{
+            display:inline-block;
+            width:180px;
+            height:24px;
+            background:url(./images/logo.png) no-repeat center;
+            background-size:contain;
+            color:transparent;
+        }
+        .head-contents{ 
+            display:none;           
+            position:absolute;
+            left:0;
+            right:0;
+            top:100%;
+            z-index:1000;
+            background:#666;
+            color:#fff;
+        }
+        .member{
+            padding:20px;
+        }
+        .member li{
+            display:inline-block;
+            padding:0 16px;
+            border-right:1px solid #fff;
+            font-size:small;
+        }
+        .member li:first-child{
+            padding-left:0;
+        }
+        .member li:last-child{
+            border-right:none;
+            padding-right:0;
+        }
+        .main-nav{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            border-top:1px solid #fff;
+            border-bottom:1px solid #fff;
+        }
+        .main-nav>li{
+            position:relative;
+        }
+        .main-nav>li:nth-child(1),.main-nav>li:nth-child(2){
+            border-bottom:1px solid #fff;
+        }
+        .main-nav>li:nth-child(1),.main-nav>li:nth-child(3){
+            border-right:1px solid #fff;
+        }
+        .main-nav>li>a{
+            display:inline-block;
+            padding:20px 0 20px 50px;
+            background:url('./images/ico_gnb01.png') no-repeat left center;
+            background-size:contain;
+        }
+        .main-nav>li:nth-child(2)>a{
+            background-image:url('/images/ico_gnb02.png');
+        }
+        .main-nav>li:nth-child(3)>a{
+            background-image:url('/images/ico_gnb03.png');
+        }
+        .main-nav>li:nth-child(4)>a{
+            background-image:url('/images/ico_gnb04.png');
+        }
+        .main-nav>li::before{
+            content:'';
+            display:none;
+            /* display:block; */
+            position:fixed;
+            left:0;
+            right:0;
+            top:112px;
+            height:50px;            
+            background:rgba(255,0,0,0.5);
+        }
+        .main-nav>li.active::before{
+            display:block;
+        }
+        .main-nav ul{
+            display:none;
+            /* display:flex; */
+            position:absolute;
+            left:50%;
+            top:320%;
+            transform:translateX(-50%);
+            width:160px;            
+            justify-content:space-between;            
+        }
+        .main-nav>li:last-child ul{
+            left:auto;
+            right:0;
+            transform:translateX(0);
+            width:80px;
+        }
+        .btn-nav{
+            grid-column:1/2;
+            grid-row:1/2;
+            width:25px;
+            height:17px;
+            cursor:pointer;
+            display:flex;
+            flex-flow:column nowrap;
+            justify-content:space-between;   
+            align-items:flex-start;
+        }
+        .btn-nav span{
+            width:25px;
+            height:3px;
+            border-radius:1.5px;
+            background:#fff;
+            transform-origin:left center;
+            transition:0.3s;
+        }
+        .btn-nav span:nth-child(2){
+            width:17px;
+            text-indent:-99999px;            
+        }
+        .btn-nav.active span:first-child{
+           transform:rotate(33deg);
+        }
+        .btn-nav.active span:nth-child(2){
+           width:0;
+        }
+        .btn-nav.active span:last-child{           
+           transform:rotate(-33deg);
+        }
+        #slider{
+            position:relative;            
+            z-index:999;
+        }
+        .desk-top,.desk-top h2{
+            display:none;
+        }
+        .desk-top{
+            position:relative;
+        }
+        .desk-top article{
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;            
+            background:url('./images/mainslide01.jpg') no-repeat center;
+            background-size:cover;
+        }
+        
+        .desk-top article .container{
+            height:500px;
+            display:flex;
+            flex-flow:column nowrap;
+            justify-content:center;
+            align-items:center;
+            color:#fff;
+        }
+        .desk-top article h3{
+            margin-bottom:16px;
+            border-bottom:1px solid #fff;
+            padding-bottom:0.1em;
+            font-weight:300;
+            font-size:2.5em;  
+            letter-spacing:10px;       
+        }
+        .desk-top article:nth-of-type(2){
+            display:none;
+            background-image:url('./images/mainslide02.jpg');
+        }
+        .desk-top article:nth-of-type(3){
+            display:none;
+            background-image:url('./images/mainslide03.jpg');
+        }
+        .desk-top p{
+            font-weight:300;
+            font-size:1.1em;
+            letter-spacing:0.6em;
+        }
+        .my-pager{
+            position:relative;
+        }
+        .my-pager .container{
+            height:500px;
+            display:flex;
+            flex-flow:row wrap;
+            justify-content:center;
+            align-content:flex-end;
+        }
+        .my-pager h3{
+            width:100%;
+            margin-bottom:0.5em;
+            font-weight:300;
+            font-size:1.5em;
+            color:#fff;
+            text-align:center;
+            letter-spacing:0.2em;
+        }
+        .my-pager span{
+            width:1em;
+            height:1em;            
+            margin:0 0.5em 2em;
+            border-radius:0.5em;
+            background:#fff;
+            text-indent:-9999px;
+            cursor: pointer;
+        }
+        .my-pager span.active{
+            width:2em;
+            margin:0 0 2em;
+        }
+        .my-pager span.start,.my-pager span.stop{
+            border-radius:0;
+            background:transparent;
+        }
+        .my-pager span.stop{
+            border-left:6px solid #fff;
+            border-right:6px solid #fff;
+        }
+        .my-pager span.start{
+            display:none;
+            border:0.5em solid #fff;
+            border-top-color:transparent;
+            border-right-color:transparent;
+            border-bottom-color:transparent;
+        }
+        .bx-wrapper{
+            margin-bottom:0;
+            border:0;
+        }
+        .bx-wrapper .bx-pager{
+            bottom:20px;
+            padding-right:40px;
+            text-align:right;
+        }
+        .bx-wrapper .bx-pager.bx-default-pager a{
+            width:5px;
+            height:5px;
+            margin:0 3px;
+            border-radius:2.5px;
+            background:rgba(255,255,255,0.5);
+        }
+        .bx-wrapper .bx-pager.bx-default-pager a.active, .bx-wrapper .bx-pager.bx-default-pager a:focus, .bx-wrapper .bx-pager.bx-default-pager a:hover {
+            background:#fff;
+        }
+        #travel{
+            padding:40px 0 0;
+        }
+        #travel .container{
+            display:grid;
+            grid-template-columns:1fr;
+        }
+        #travel article{
+            margin-bottom:40px;
+            text-align:center;
+            cursor:pointer;
+        }
+        #travel article:last-of-type{
+            margin-bottom:0;
+            border-bottom:1px solid #666;
+            padding-bottom:50px;
+        }
+        #travel h2{
+            margin-bottom:0.8em;
+            font-size:1.4em;
+            color:#666;
+            text-align:center;
+        }
+        #travel h2 span{
+            display:block;
+            font-weight:700;
+        }
+        #travel .img-box{
+            margin-bottom:20px;
+            filter:grayscale(1);
+            transition:0.3s;
+        }
+        #travel .img-box:hover{
+            filter:grayscale(0);
+        }
+        #travel h3{
+            margin-bottom:10px;
+            font-weight:700;
+            font-size:1.2em;
+            text-align:center;
+        }
+        #travel p{
+            width:60%;
+            margin:0 auto 36px;
+            color:#666;
+            text-align:center;
+            line-height:1.4;
+        }
+        #travel a{
+            border-top:2px solid #333;
+            padding-top:4px;
+        }
+        .pop-box{
+            display:none;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;            
+            z-index:1001;
+            background:rgba(0,0,0,0.3);
+        }
+        .pop-content{            
+            position:absolute;
+            left:50%;
+            top:200px;
+            transform:translateX(-50%);
+            width:50%;
+            padding:20px;
+            background:#fff;
+        }
+        .pop-content h4{
+            margin-bottom:10px;
+            font-size:1.4em;
+        }
+
+        #notice{
+            border-bottom:1px solid #666;
+            padding:20px 0 40px;
+        }
+        #notice .container{
+            display:grid;
+            grid-template-columns:repeat(3,calc(33.3333% - 10px));
+            column-gap:15px;
+        }
+        #notice h2,
+        #notice article:first-of-type,
+        #notice article:first-of-type h3{
+            display:none;
+        }
+        #notice article:first-of-type{            
+            justify-content: center;
+            align-items: center;            
+            background:url('./images/bg_app.jpg') no-repeat center;
+            background-size:cover;
+        }
+        #notice article:first-of-type a{
+            margin-right:0.5em;
+            border:2px solid #fff;
+            padding:1.5em 1.5em 1.5em 4em;
+            font-size:1.1em;
+            color:#fff;
+            background:url('./images/ico_katalk.png') no-repeat 10px center;
+            background-size:43px;
+        }
+        #notice article:first-of-type a:last-of-type{
+            background-image:url('./images/ico_phone.png');
+        }
+        #notice article:last-of-type{
+            grid-column:1/4;
+        }
+        #notice h3{
+            margin-bottom:0.8em;
+            font-weight:700;
+            font-size:1.2em;
+        }
+        
+        #notice li{
+            margin-bottom:10px;
+            padding-left:16px;            
+            background:url('./images/ico_bullet.png') left center no-repeat;
+            font-weight:300;
+            font-size:14px;
+            color:#666;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;                        
+        }
+
+        #footer{
+            margin-bottom:80px;
+            padding:40px 0;
+        }
+        #footer .container{
+            display:flex;
+            flex-flow:row wrap;
+            justify-content:space-between;
+        }
+        #footer nav,#footer address,#footer .sns{
+            width:100%;
+        }
+        #footer nav{
+            position:relative;
+            margin-bottom:1em;
+        }
+        #footer nav::after{
+            position:absolute;
+            left:70px;
+            top:50%;
+            transform:translateY(-50%);
+            content:'';
+            display:block;
+            width:1px;
+            height:10px;
+            background:#666;
+        }
+        #footer address{
+            margin-bottom:16px;
+            font-size:13px;
+            color:#333;
+        }
+        #footer span{
+            display:block;
+        }
+        #footer .sns{
+            display:grid;
+            grid-template-columns:repeat(3,60px);
+            column-gap:60px;
+            justify-content:center;
+        }
+        aside{
+            display:flex;
+            flex-flow:row nowrap;
+            justify-content:space-around;
+            align-items:center;
+            position:fixed;
+            left:0;
+            right:0;
+            bottom:0;
+            z-index:1002;
+            height:80px;
+            background:#333;
+            color:#fff;
+        }
+        aside a{
+            padding:1em 0 1em 2em;
+            background:url('./images/ico_phone_mobtm.png') no-repeat left center;
+            background-size:24px;
+        }
+        aside a:nth-child(2){
+            background-image:url('./images/ico_katalk_mobtm.png');
+        }
+        aside a:nth-child(3){
+            background-image:url('./images/ico_contact_mobtm.png');
+        }
+        aside a:last-child{            
+            position:fixed;
+            right:20px;
+            bottom:120px;
+            width:40px;
+            height:40px;
+            border-radius:20px;            
+            padding:0;            
+            background:#666;
+            font-size:10px;
+            text-align:center;
+            line-height:50px;
+        }
+        aside a:last-child::after{
+            content:'^';
+            display:block;
+            position:absolute;
+            left:50%;
+            top:-12px;
+            transform:translateX(-50%);
+            font-size:16px;
+        }
+        .cst{
+            display:none;
+        }
+        
+        
+
+
+
+        
+
+
+
+        /* Mediam */
+        @media(min-width:801px){
+            #header .container{
+                grid-template-columns:auto auto;
+                justify-content:space-between;
+                height:112px;
+            }
+            h1{
+                grid-column:auto;
+            } 
+            h1 a{
+                width:230px;
+                height:112px;
+            }           
+            .head-contents{
+                position:static;
+                grid-column:auto;
+                display:block !important;
+                background:transparent;
+            }
+            .member{
+                text-align:right;
+                padding:0 0 16px 0;
+            }
+            .main-nav{
+                grid-template-columns:repeat(4,auto);
+                column-gap:80px;
+                border:none;
+            }
+            .main-nav>li{border:none !important;}
+            .main-nav>li>a{
+                padding:0;
+                background:none !important;
+            }
+            .btn-nav{
+                display:none;
+            }
+            .desk-top{
+                display:block;
+            }
+
+            .bx-wrapper{
+                display:none;
+            }
+            #travel{
+                padding:56px 0;
+            }
+            #travel .container{                
+                grid-template-columns:repeat(3,1fr);
+                column-gap:15px;
+            }
+            #travel h2{
+                grid-column:1/4;
+            }
+            #travel h2 span{
+                display:inline;         
+            }
+            #travel article:last-of-type{
+                border:none;
+            }
+            #notice article:first-of-type{
+                display:flex;
+                grid-column:1/3;
+            }
+            #notice article:last-of-type{
+                grid-column:3/4;
+            }
+            #footer{
+                margin-bottom:0;
+            }
+            #footer address,#footer .sns{
+                width:auto;
+            }
+            #footer span{
+                display:inline;
+            }
+            #footer span::after{
+                content:' /';
+                display:inline;
+            }
+            #footer span:last-child::after{
+                display:none;
+            }
+            aside{
+                height:0;
+            }
+            aside a{
+                display:none;
+            }
+            aside a:last-child{
+                display:block;
+            }
+        }
+
+
+        /* large */
+        @media(min-width:1065px){
+            #travel .container, #notice .container{                                
+                column-gap:21px;
+            }
+        }
+
+
+
+        /* xlarge */
+        @media(min-width:1090px){
+            aside{
+                flex-flow:column nowrap;
+                left:auto;
+                top:200px;
+                bottom:auto;
+                height:auto;
+            }
+            aside a{
+                display:block;
+                width:100%;
+                border-bottom:1px solid #ccc;
+                padding:1em;
+                background:none !important;
+                text-align:center;
+            }
+            .cst{
+                display:block;
+                font-size:14px;
+            }
+            aside a:last-child{
+                position:static;
+                width:100%; 
+                border-radius:0;               
+                background:#fff !important;
+                font-size:16px;
+                color:#333;
+                line-height:40px;
+            }
+            aside a:last-child::after{
+                display:none;
+            }
+        }
+    </style>
+    <script>        
+        $(function(){
+            // 네비게이션 버튼 이벤트
+            $('.btn-nav').click(function(){
+                let flag = $(this).attr('flag');
+                if(flag==1){
+                    $('.head-contents').slideDown(300);    
+                    $('#header').css('background','#666');
+                    $(this).children().eq(0).css('transform','rotate(33deg)');
+                    $(this).children().eq(1).css('width','0');
+                    $(this).children().eq(2).css('transform','rotate(-33deg)')
+                    $(this).attr('flag',0);
+                }else{
+                    $('.head-contents').slideUp(300);    
+                    $('#header').css('background','rgba(0,0,0,0.2)');
+                    $(this).children().eq(0).css('transform','rotate(0deg)');
+                    $(this).children().eq(1).css('width','17px');
+                    $(this).children().eq(2).css('transform','rotate(0deg)');
+                    $(this).attr('flag',1);
+                }
+            })
+
+
+            // 마우스오버 이벤트
+            $('.main-nav').children().mouseenter(function(){
+                $('.main-nav').children().children('ul').css('display','none');
+                $('.main-nav').children().removeClass('active');
+                $(this).addClass('active');
+                $(this).children('ul').css('display','flex');
+            });
+
+            // 마우스아웃이벤트
+            $('.main-nav').children().children('ul').mouseleave(function(){
+                $('.main-nav').children().children('ul').css('display','none');
+                $('.main-nav').children().removeClass('active');
+            })
+
+
+            // bxslider 
+            $('.bxslider').bxSlider();
+
+            let sliders = $('.desk-top article');              
+            let btnNums = $('.slide-num');
+            let idx=1;
+            function mySlider(){
+                // 슬라이드 전환
+                sliders.fadeOut(1000);
+                sliders.eq(idx).fadeIn(1000);
+                // 버튼 엑티브
+                btnNums.removeClass('active');
+                btnNums.eq(idx++).addClass('active');
+
+                if(idx>=3){
+                    idx=0;
+                }                
+            }
+
+            let cngSlider = setInterval(mySlider,4000);
+
+            // 슬라이더 멈춤 이벤트
+            $('.stop').click(function(){
+                clearInterval(cngSlider);
+                $(this).css('display','none');
+                $('.start').css('display','block');
+            })
+            //슬라이더 재실행 이벤트
+            $('.start').click(function(){
+                cngSlider = setInterval(mySlider,4000);
+                $(this).css('display','none');
+                $('.stop').css('display','block');
+            })
+            //pager 클릭 이벤트
+            btnNums.click(function(){
+                idx = $(this).index() - 1;
+                clearInterval(cngSlider);
+                mySlider();
+                cngSlider = setInterval(mySlider,4000);
+            })
+            $('#travel a').click(function(){
+                return false;
+            })
+
+            $('#travel article').click(function(){
+                console.log($(this));
+            })
+
+            let docHeight;            
+            function fnDocHeight(){
+                docHeight = $(document).height();
+                $('.pop-box').css('height',`${docHeight}px`);
+            }
+            fnDocHeight();
+
+            $('#travel article').click(function(){
+                $(this).children('.pop-box').toggle(0);
+            })            
+
+            // $('.btn-nav').click(function(){
+            //    $('.head-contents').slideToggle(300);
+            //    $('#header').toggleClass('active');
+            //    $(this).toggleClass('active');
+            // })                
+        })
+    </script>
+</head>
+<body>
+    <!-- 스킵메뉴 -->
+    <ul id="skip-menu">
+        <li><a href="#header">헤더보기</a></li>
+        <li><a href="#top3">여행지 탑3 보기</a></li>
+        <li><a href="#notice">게시판 보기</a></li>
+        <li><a href="#footer">푸터보기</a></li>
+    </ul>
+
+    <section id="wrap">
+        <header id="header">
+            <div class="container">
+                <h1><a href="./index.html">투어리스트(tourist)</a></h1>
+                <div class="head-contents">
+                    <ul class="member">
+                        <li><a href="#">로그인</a></li>
+                        <li><a href="#">회원가입</a></li>
+                    </ul>
+                    <nav>
+                        <ul class="main-nav">
+                            <li>
+                                <a href="#">여행정보</a>
+                                <ul>
+                                    <li><a href="#">국내여행</a></li>
+                                    <li><a href="#">해외여행</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">고객센타</a>
+                                <ul>
+                                    <li><a href="#">공지사항</a></li>
+                                    <li><a href="#">문의하기</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">상품투어</a>
+                                <ul>
+                                    <li><a href="#">프로그램 소개</a></li>
+                                    <li><a href="#">여행자료</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">티켓/가이드</a>
+                                <ul>
+                                    <li><a href="#">항공</a></li>
+                                    <li><a href="#">호텔</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="btn-nav" flag="1">                    
+                    <span></span>
+                    <span>네비게이션 열기</span>
+                    <span></span>
+                </div>
+            </div>
+        </header>
+        <aside>
+            <a href="#">
+                <span>전화문의</span>
+                <span class="cst">010-1234-5678</span>
+            </a>
+            <a href="#">
+               <span>카카오톡</span>
+               <span class="cst">1:1상담</span> 
+            </a>
+            <a href="#">
+                <span>오시는길</span>
+            </a>
+            <a href="#header">                
+                <span>TOP</span>
+            </a>
+        </aside>
+        <section id="slider">
+            <div class="desk-top">                
+                <h2>광고판</h2>
+                <article>
+                    <div class="container">
+                        <h3>TRUST & INFORMATION</h3>
+                        <p>믿을 수 있는 여행정보, 여행... 어디로 가세요?</p>                        
+                    </div>
+                </article>
+                <article>
+                    <div class="container">
+                        <h3>TRUST & INFORMATION</h3>
+                        <p>믿을 수 있는 여행정보, 여행... 어디로 가세요?</p>                        
+                    </div>
+                </article>
+                <article>
+                    <div class="container">
+                        <h3>TRUST & INFORMATION</h3>
+                        <p>믿을 수 있는 여행정보, 여행... 어디로 가세요?</p>                        
+                    </div>
+                </article>
+                <div class="my-pager">
+                    <div class="container">
+                        <h3>BE TOURIST FOR BETTER LIFE</h3>
+                        <span class="slide-num active">1</span>
+                        <span class="slide-num">2</span>
+                        <span class="slide-num">3</span>
+                        <span class="stop">멈춤</span>
+                        <span class="start">시작</span>
+                    </div>
+                </div>                
+            </div>
+            <div class="mobile bxslider">
+                <div class="img-box">
+                    <img src="./images/mainslide_mob01.jpg" alt="슬라이더1">
+                </div>
+                <div class="img-box">
+                    <img src="./images/mainslide_mob02.jpg" alt="슬라이더2">
+                </div>
+                <div class="img-box">
+                    <img src="./images/mainslide_mob03.jpg" alt="슬라이더3">
+                </div>
+            </div>
+        </section>
+        <section id="travel">
+            <div class="container">
+                <h2>다시 찾는 인기 여행지 <span>TOP 3</span></h2>
+                <article>
+                    <div class="img-box"><img src="./images/img_topplace01.jpg" alt="topplace01"></div>
+                    <h3>성패트릭 대성당</h3>
+                    <p>바쁜 뉴욕 안에서 정교하면서 웅장한 기운에 침묵하게 되는 기도의 시간!</p>
+                    <a href="#">VIEW</a>
+                    <div class="pop-box">
+                        <div class="pop-content">
+                            <h4>성패트릭 대성당</h4>
+                            <div class="img-box"><img src="./images/img_pop1_1.jpg" alt="pop1_1"></div>
+                            <p>바쁜 뉴욕 안에서 정교하면서 웅장한 기운에 침묵하게 되는 기도의 시간!</p>
+                        </div>
+                    </div>
+                </article>
+                <article>
+                    <div class="img-box"><img src="./images/img_topplace02.jpg" alt="topplace02"></div>
+                    <h3>원주 뮤지엄 '산'</h3>
+                    <p>전시된 유산들을 담아낸 건물에 신비로운 돌과 물의 테마가 담겨 있다.</p>
+                    <a href="#">VIEW</a>
+                    <div class="pop-box">
+                        <div class="pop-content">
+                            <h4>원주 뮤지엄 '산'</h4>
+                            <div class="img-box"><img src="./images/img_pop2_1.jpg" alt="pop2_1"></div>
+                            <p>전시된 유산들을 담아낸 건물에 신비로운 돌과 물의 테마가 담겨 있다.</p>
+                        </div>
+                    </div>
+                </article>
+                <article>
+                    <div class="img-box"><img src="./images/img_topplace03.jpg" alt="topplace03"></div>
+                    <h3>일본 만국박람회 기념공원</h3>
+                    <p>오사카 센리 반파쿠에는 드넓은 대지에 정원과 들, 물과 함께 하는 문화가 있다.</p>
+                    <a href="#">VIEW</a>
+                    <div class="pop-box">
+                        <div class="pop-content">
+                            <h4>일본 만국박람회 기념공원</h4>
+                            <div class="img-box"><img src="./images/img_pop3_1.jpg" alt="pop3_1"></div>
+                            <p>오사카 센리 반파쿠에는 드넓은 대지에 정원과 들, 물과 함께 하는 문화가 있다.</p>
+                        </div>
+                    </div>
+                </article>                
+            </div>
+        </section>
+        <section id="notice">
+            <div class="container">
+                <h2>게시판</h2>
+                <article>
+                    <h3>상담</h3>
+                    <a href="#" class="talk">카카오톡 1:1상담</a>
+                    <a href="#" class="talk">전화 상담 신청</a>
+                </article>
+                <article>
+                    <h3>NOTICE</h3>
+                    <ul>
+                        <li><a href="#">이번 여름 휴가 제주 갈가? 미션 투어(여행 만들기 / 추억 만들기)</a></li>
+                        <li><a href="#">박물관 미션 투어 응모 당첨자 발표</a></li>
+                        <li><a href="#">추석 여휴 티켓/투어 배송 및 직접 수령 안내</a></li>
+                        <li><a href="#">하롱베이 서비스 OPEN!(여행정보, 가이드 안내)</a></li>
+                        <li><a href="#">투어리스트인투어 서비스 점검 안내</a></li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+        <footer id="footer">
+            <div class="container">
+                <nav>
+                    <a href="#"><strong>이용약관&nbsp;&nbsp;</strong></a>
+                    <a href=""><strong>&nbsp;&nbsp;개인정보처리방침</strong></a>
+                </nav>
+                <address>
+                    <p>투어리스트인투어</p>
+                    <p>
+                        <span>서울시 종로구 종로9길 16</span>
+                        <span>대표전화 : (02)-1234-5678</span>
+                        <span>E-mail:pam7461@naver.com</span>
+                    </p>
+                    <p>Copyright(c) TourisInTour all right reserved</p>
+                </address>
+                <div class="sns">
+                    <div class="img-box">
+                        <a href="#"><img src="./images/ico_blog_r.png" alt="blog"></a>
+                    </div>
+                    <div class="img-box">
+                        <a href="#"><img src="./images/ico_facebook_r.png" alt="facebook"></a>
+                    </div>
+                    <div class="img-box">
+                        <a href="#"><img src="./images/ico_instargram_r.png" alt="instagram"></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+</body>
+</html>
